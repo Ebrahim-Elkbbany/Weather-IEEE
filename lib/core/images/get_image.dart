@@ -7,7 +7,7 @@ String getWeatherIconImage(String  iconCode) {
     case '03d':
       return 'assets/images/cloudy.png';
     case '04d':
-      return 'assets/icons/cloudy.png';
+      return 'assets/images/cloudy.png';
     case '09d':
       return 'assets/images/rainy.png';
     case '10d':
@@ -17,8 +17,8 @@ String getWeatherIconImage(String  iconCode) {
     case '13d':
       return 'assets/images/snow.png';
     case '50d':
-      return 'assets/icons/snow.png';
+      return 'assets/images/snow.png';
     default:
-      return 'assets/images/clear.png';
+      return 'assets/images/unknown.png';
   }
 }

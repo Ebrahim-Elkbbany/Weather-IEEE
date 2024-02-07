@@ -40,7 +40,7 @@ class HomeView extends StatelessWidget {
                     AppTextFormField(
                       suffixIconTap: () {
                         provider.getWeather(context);
-                        provider.errorMessage='';
+                        provider.errorMessage = '';
                       },
                       controller: provider.cityController,
                       hintText: 'Enter Location',
@@ -54,56 +54,63 @@ class HomeView extends StatelessWidget {
                     if (provider.isLoading)
                       const CircularProgressIndicator(color: Colors.white)
                     else if (provider.errorMessage.isNotEmpty)
-                      buildErrorWidget(provider.errorMessage, context,provider)
-                      else
-                        Column(
-                          children: [
-                            Text(
-                              provider.weatherContent!.name!.toUpperCase(),
-                              style: TextStyles.font24WhiteSemiBold,
-                            ),
-                            SizedBox(height: 25.h),
-                            Image.asset(
-                              getWeatherIconImage(provider.weatherContent!.weather![0].icon!),
-                              fit: BoxFit.fill,
-                              width: 60.w,
-                              height: 55.h,
-                            ),
-                            SizedBox(height: 25.h),
-                            Text(
-                              '${(provider.weatherContent!.main!.temp! - 273.15).round().toString()}\u2103',
-                              style: TextStyles.font24WhiteBold,
-                            ),
-                            SizedBox(height: 5.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '${(provider.weatherContent!.main!.tempMax! - 273.15).round().toString()}\u2103',
-                                  style: TextStyles.font13WhiteRegular,
-                                ),
-                                SizedBox(width: 7.w),
-                                Text(
-                                  '${(provider.weatherContent!.main!.tempMin! - 273.15).round().toString()}\u2103',
-                                  style: TextStyles.font13WhiteRegular,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 70.h),
-                            SizedBox(
-                              height: 80.h,
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return  NextDaysSizedBox(temp: '${(provider.nextDaysWeatherContent?[index].temp ?? 273.15- 273.15).round().toString()}\u2103' ?? "0", dayName: provider.nextDaysWeatherContent?[index].dateTime ??'',);
-                                },
-                                itemCount: 5,
+                      buildErrorWidget(provider.errorMessage, context, provider)
+                    else
+                      Column(
+                        children: [
+                          Text(
+                            provider.weatherContent!.name!.toUpperCase(),
+                            style: TextStyles.font24WhiteSemiBold,
+                          ),
+                          SizedBox(height: 25.h),
+                          Image.asset(
+                            getWeatherIconImage(
+                                provider.weatherContent!.weather![0].icon!),
+                            fit: BoxFit.fill,
+                            width: 60.w,
+                            height: 55.h,
+                          ),
+                          SizedBox(height: 25.h),
+                          Text(
+                            '${(provider.weatherContent!.main!.temp! - 273.15).round().toString()}\u2103',
+                            style: TextStyles.font24WhiteBold,
+                          ),
+                          SizedBox(height: 5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${(provider.weatherContent!.main!.tempMax! - 273.15).round().toString()}\u2103',
+                                style: TextStyles.font13WhiteRegular,
                               ),
+                              SizedBox(width: 7.w),
+                              Text(
+                                '${(provider.weatherContent!.main!.tempMin! - 273.15).round().toString()}\u2103',
+                                style: TextStyles.font13WhiteRegular,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 70.h),
+                          SizedBox(
+                            height: 80.h,
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return NextDaysSizedBox(
+                                  temp:
+                                      '${(provider.nextDaysWeatherContent?[index].temp ?? 273.15 - 273.15).round().toString()}\u2103' ??
+                                          "0",
+                                  dayName: provider.processedDays[index],
+                                  image: getWeatherIconImage(provider.nextDaysWeatherContent![index].image!),
+                                );
+                              },
+                              itemCount: 5,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
                   ],
                 );
               },
@@ -112,5 +119,5 @@ class HomeView extends StatelessWidget {
         ),
       ),
     );
-  }}
-
+  }
+}

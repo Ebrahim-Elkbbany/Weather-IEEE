@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:weather_final_project/core/location/location_service.dart';
 import 'package:weather_final_project/features/home_screen/data/current_weather_data.dart';
@@ -18,6 +19,7 @@ class GetWeatherProvider extends ChangeNotifier {
   List<FiveDayData>? nextDaysWeatherContent;
   bool isLoading = false;
   String errorMessage = '';
+  List<String> processedDays = [];
 
   Future<void> getWeather(BuildContext context) async {
     _setLoading(true);
@@ -83,6 +85,12 @@ class GetWeatherProvider extends ChangeNotifier {
     } else {
       final data = jsonDecode(response.body);
       nextDaysWeatherContent = (data['list'] as List).map((t) => FiveDayData.fromJson(t)).toList();
+      for(var i in nextDaysWeatherContent! ){
+        String day = DateFormat('EEEE').format(DateTime.parse(i.dateTime!)).substring(0,3);
+        if (!processedDays.contains(day)) {
+          processedDays.add(day);
+        }
+      }
     }
   }
 
